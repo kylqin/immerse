@@ -1,0 +1,98 @@
+.reader-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  box-sizing: border-box;
+  z-index: -10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.progress-chapter-name,
+.progress-book-name {
+  width: 540px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  position: absolute;
+  top: 5px;
+  line-height: 30px;
+  color: rgba(191, 191, 191, 1);
+  text-align: center;
+}
+.progress-chapter-name {
+  left: calc(25% - 270px);
+  .single & {
+    left: calc(50% - 270px);
+  }
+}
+.progress-book-name {
+  right: calc(25% - 270px);
+}
+.background-page-left,
+.background-page-right {
+  width: 540px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  position: absolute;
+  bottom: 10px;
+  line-height: 30px;
+  color: rgba(191, 191, 191, 1);
+  text-align: center;
+  font-size: 14px;
+}
+.background-page-left {
+  left: calc(25% - 270px);
+  .single & {
+    left: calc(50% - 270px);
+  }
+}
+.background-page-right {
+  right: calc(25% - 270px);
+}
+
+.background-box1 {
+  position: absolute;
+  left: 5px;
+  right: 5px;
+  top: 5px;
+  bottom: 5px;
+  border: 1px solid rgba(191, 191, 191, 1);
+  box-shadow: 0 0 5px rgba(191, 191, 191, 1);
+  z-index: 0;
+
+  .single & {
+    left: calc(50vw - 270px);
+    right: calc(50vw - 270px);
+  }
+}
+// .background-box2 {
+//   position: absolute;
+//   left: 7px;
+//   right: 7px;
+//   top: 5px;
+//   bottom: 5px;
+//   border: 1px solid rgba(191, 191, 191, 1);
+//   box-shadow: 0 0 5px rgba(191, 191, 191, 1);
+//   z-index: 1;
+// }
+// .background-box3 {
+//   position: absolute;
+//   left: 9px;
+//   right: 9px;
+//   top: 5px;
+//   bottom: 5px;
+//   border: 1px solid rgba(191, 191, 191, 1);
+//   box-shadow: 0 0 5px rgba(191, 191, 191, 1);
+//   z-index: 2;
+//   /* display: flex;
+//   justify-content: space-between;
+//   place-content: center; */
+//   overflow: hidden;
+// }

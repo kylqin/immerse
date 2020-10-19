@@ -1,0 +1,26 @@
+.viewer {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  top: 0;
+  height: 100%;
+
+  .view-page-area {
+    position: absolute;
+    left: 30px;
+    right: 30px;
+    top: 30px;
+    bottom: 30px;
+    /* width: calc(100% - 100px);
+    height: calc(100% - 100px); */
+    z-index: 0;
+    user-select: text;
+
+    &.continuous {
+      left: calc(50vw - 270px);
+      right: calc(50vw - 270px);
+      top: 75px;
+      bottom: 75px;
+    }
+  }
+}
