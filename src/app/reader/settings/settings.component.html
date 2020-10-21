@@ -1,0 +1,82 @@
+<div class="reader-settings">
+  <h1 mat-dialog-title>阅读设置</h1>
+  <div mat-dialog-content>
+    <form [formGroup]="settings" class="settings-form">
+      <div class="settings-form-field">
+        <mat-label>主题</mat-label>
+        <div class="fat-ratio-group">
+          <button
+            class="fat-ratio"
+            mat-mini-fab
+            *ngFor="let t of themes"
+            (click)="controls.theme.setValue(t.theme)"
+            [ngStyle]="{ 'background-color': t.theme, color: 'red' }">
+            <mat-icon *ngIf="t.theme === controls.theme.value">check</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="settings-form-field">
+        <mat-label>页面模式</mat-label>
+        <!-- <input matInput [formControl]="controls.pageMode"> -->
+        <div class="fat-ratio-group">
+          <button
+            class="fat-ratio"
+            mat-mini-fab
+            *ngFor="let mode of pageModes"
+            (click)="controls.pageMode.setValue(mode.value)"
+            [ngStyle]="{ 'background-color': '#eeeeee33' }">
+            <mat-icon [ngStyle]="{ color: mode.value === controls.pageMode.value ? 'red' : '#ccc' }">{{mode.icon}}</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="settings-form-field">
+        <mat-label>缩放比例</mat-label>
+        <mat-slider
+          class="settings-slider"
+          min="50"
+          max="150"
+          thumbLabel
+          tickInterval="10"
+          [formControl]="controls.pageScale"
+        ></mat-slider>
+      </div>
+
+      <mat-form-field>
+        <mat-label>字体</mat-label>
+        <mat-select [formControl]="controls.fontFamily">
+          <mat-option *ngFor="let ff of fontFamilies" [value]="ff">
+            {{ff}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="settings-form-field">
+        <mat-label>字体大小</mat-label>
+        <mat-slider
+          class="settings-slider"
+          min="13"
+          max="32"
+          thumbLabel
+          tickInterval="1"
+          [formControl]="controls.fontSize"
+        ></mat-slider>
+      </div>
+
+      <mat-form-field>
+        <mat-label>行高</mat-label>
+        <mat-select [formControl]="controls.lineHeight">
+          <mat-option *ngFor="let lh of lineHeights" [value]="lh">
+            {{lh}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </form>
+  </div>
+  <div mat-dialog-actions>
+    <!-- <button mat-button (click)="onNoClick()">No Thanks</button>
+    <button mat-button [mat-dialog-close]="settings.value" cdkFocusInitial>Ok</button> -->
+  </div>
+</div>

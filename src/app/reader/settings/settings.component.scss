@@ -1,0 +1,35 @@
+.reader-settings {
+  // position: absolute;
+  // top: 10px;
+  // right: 10px;
+  width: 260px;
+}
+
+.settings-form {
+  padding: 20px;
+}
+
+.settings-form-field {
+  display: flex;
+  flex-direction: column;
+
+  mat-label {
+    color: rgba(0,0,0,.54);
+    font-size: 12px;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+
+  }
+
+  .fat-ratio-group {
+    margin: 8px 0;
+  }
+  .fat-ratio {
+    margin-right: 4px;
+  }
+}
+
+.settings-slider {
+  width: 196px;
+  padding: 8px 0;
+  margin-left: -8px;
+}
