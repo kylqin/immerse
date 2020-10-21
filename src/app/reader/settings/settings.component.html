@@ -26,7 +26,7 @@
             *ngFor="let mode of pageModes"
             (click)="controls.pageMode.setValue(mode.value)"
             [ngStyle]="{ 'background-color': '#eeeeee33' }">
-            <mat-icon [ngStyle]="{ color: mode.value === controls.pageMode.value ? 'red' : '#ccc' }">{{mode.icon}}</mat-icon>
+            <span [class]="mode.icon" [ngStyle]="{ color: mode.value === controls.pageMode.value ? 'red' : '#aaa' }"></span>
           </button>
         </div>
       </div>

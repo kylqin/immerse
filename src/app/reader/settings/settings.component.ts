@@ -30,10 +30,10 @@ export class SettingsComponent {
   ];
 
   public pageModes = [
-    { value: 'single', icon: 'kitchen' },
-    { value: 'double', icon: 'spa' },
-    { value: 'scroll', icon: 'no_cell' },
-    { value: 'continuous', icon: 'umbrella' },
+    { value: 'single', icon: 'icon-single-page' },
+    { value: 'double', icon: 'icon-two-page' },
+    { value: 'scroll', icon: 'icon-scroll1' },
+    { value: 'continuous', icon: 'icon-scroll' },
   ];
 
   public fontFamilies = [
