@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Book } from '../models/Book';
 import * as localforage from 'localforage';
 import * as SparkMD5 from 'spark-md5';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class ReaderService {
 
   public currentEpub = null;
 
-  public toc = new Subject();
+  public toc = new BehaviorSubject([]);
   public flattenedToc = null;
   public notes = [];
   public bookmarks = [];

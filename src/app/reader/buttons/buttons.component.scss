@@ -1,5 +1,28 @@
+button {
+  color: #ddd3d333;
+  &:hover {
+    // color: #666;
+    box-shadow: 0 0 12px 0 #ccc;
+  }
+}
+
+.buttons-top-left,
 .buttons-top-right {
   position: absolute;
+  &:hover {
+    // box-shadow: 0 0 12px 0 #ccc;
+    button {
+      color: #666;
+    }
+  }
+}
+
+.buttons-top-left {
+  top: 2px;
+  left: 2px;
+}
+
+.buttons-top-right {
   top: 2px;
   right: 2px;
 }

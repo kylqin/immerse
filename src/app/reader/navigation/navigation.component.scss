@@ -1,5 +1,5 @@
 .reader-navigation {
-  position: absolute;
+  position: relative;
   left: 0;
   top: 0;
   width: 300px;
@@ -9,7 +9,7 @@
 }
 
 .navigation-header {
-  position: fixed;
+  position: absolute;
   width: 299px;
   height: 173px;
   background: rgba(255, 255, 255, 1);

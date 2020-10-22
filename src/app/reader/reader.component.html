@@ -1,7 +1,17 @@
 <div class="viewer">
   <!-- <input type="file" (change)="selectBook($event)"/> -->
-  <div id="page-area" class="view-page-area" [ngClass]="isSingleMode ? 'single' : ''"></div>
-  <app-reader-background></app-reader-background>
-  <app-reader-buttons></app-reader-buttons>
-  <app-reader-navigation></app-reader-navigation>
+
+  <mat-sidenav-container class="nav-container">
+    <mat-sidenav #nav mode="over">
+      <app-reader-navigation></app-reader-navigation>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div class="nav-content">
+        <div id="page-area" class="view-page-area" [ngClass]="isSingleMode ? 'single' : ''"></div>
+        <app-reader-background></app-reader-background>
+        <app-reader-buttons (openNav)="nav.toggle()"></app-reader-buttons>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>

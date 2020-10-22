@@ -8,6 +8,7 @@ import { ReaderComponent } from './reader.component';
 import { SettingsComponent } from './settings/settings.component';
 
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -34,6 +35,7 @@ import { TocComponent } from './toc/toc.component';
     MatCheckboxModule,
     MatInputModule,
     MatDialogModule,
+    MatSidenavModule,
     MatSliderModule,
     MatRadioModule,
     MatSelectModule
