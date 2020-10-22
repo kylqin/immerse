@@ -45,7 +45,7 @@ export class SettingsComponent {
     'Arial',
   ];
 
-  public lineHeights = [1, 1.25, 1.5, 1.75, 2];
+  public lineHeights = ['1', '1.25', '1.5', '1.75', '2'];
 
   public settings: FormGroup;
   public controls: Controls = {};

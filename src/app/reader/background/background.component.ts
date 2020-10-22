@@ -8,17 +8,28 @@ import { ConfigService } from 'src/app/config/config.service';
 })
 export class BackgroundComponent implements OnInit {
 
-  public backgroundColor = 'rgba(235,255,231,1)';
+  public backgroundColor = '';
 
+  private pageMode: string;
   public get isSingleMode() {
-    return true;
+    return this.pageMode !== 'double';
   }
 
   constructor(private configService: ConfigService) { }
 
   ngOnInit() {
+    this.watchSettings();
+    this.backgroundColor = this.configService.getItem('reader.theme') as string;
+    this.pageMode = this.configService.getItem('reader.pageMode') as string;
+   }
+
+   watchSettings() {
     this.configService.listen('reader.theme').subscribe((theme: string) => {
       this.backgroundColor = theme;
+    });
+
+    this.configService.listen('reader.pageMode').subscribe((pageMode: string) => {
+      this.pageMode = pageMode;
     });
    }
 

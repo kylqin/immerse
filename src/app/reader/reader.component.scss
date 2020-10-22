@@ -16,7 +16,7 @@
     z-index: 0;
     user-select: text;
 
-    &.continuous {
+    &.single {
       left: calc(50vw - 270px);
       right: calc(50vw - 270px);
       top: 75px;

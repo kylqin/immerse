@@ -8,10 +8,10 @@ import * as SparkMD5 from 'spark-md5';
 })
 export class ReaderService {
 
-  public currentBook: any = null;
+  public currentBook: any = { key: '1603109063292' };
   private ePub = (window as any).ePub;
 
-  private currentEpub = null;
+  public currentEpub = null;
 
   constructor() { }
 
@@ -162,6 +162,7 @@ export class ReaderService {
                         md5,
                         cover
                       );
+                      this.currentBook = book;
                       await this.handleAddBook(book);
                       localforage.setItem(key, (e.target as any).result);
                       resolve(epub);
@@ -223,12 +224,41 @@ export class ReaderService {
 
   // settings
 
-  public setPageMode(mode: 'single' | 'double' | 'scroll' | 'continuous') {
+  // public setPageMode(mode: 'single' | 'double' | 'scroll' | 'continuous') {
+  public setPageMode(mode: string) {
     // todo
+    // const rendition = this.currentEpub.rendition;
+    // rendition.viewManager = rendition.requireManager(
+    //   mode === 'continuous' ? 'continuous' : 'default'
+    // );
+
+    // rendition.View = rendition.requireView(rendition.settings.view);
+
+    // rendition.manager = new rendition.ViewManager({
+    //   view: rendition.View,
+    //   queue: rendition.q,
+    //   request: rendition.book.load.bind(rendition.book),
+    //   settings: rendition.settings
+    // });
+
+    // const flow = mode === 'scroll'
+    //   ? 'scrolled-doc'
+    //   : mode === 'continuous'
+    //   ? 'scrolled'
+    //   : 'auto';
+    // // this.currentEpub.rendition.setManager(manager);
+    // this.currentEpub.rendition.flow(flow);
   }
 
   public setTheme(theme: string) { // backgorund color
-    // todo
+    // todo: 使用 inherit 后，使一些元素(比如 a, 链接和目录项)失去了原本的颜色
+    console.log('themes', this.currentEpub.rendition.themes);
+    this.currentEpub.rendition.themes.default({
+      'a, article, cite, code, div, li, p, pre, span, table': {
+        color: `${theme === 'rgba(44,47,49,1)' ? 'white' : 'inherit'} !important`,
+        // color: `${theme === 'rgba(44,47,49,1)' ? 'white!important' : 'inherit'}`,
+      },
+    });
   }
 
   public setFontSize(size: number) {
@@ -258,4 +288,38 @@ export class ReaderService {
   public setScale(scale: number) {
     // todo
   }
+
+  applySettings(epub, settings) {
+    const isUseFont = false;
+
+    epub.rendition.themes.default({
+      'a, article, cite, code, div, li, p, pre, span, table': {
+        'font-size': `${
+          // OtherUtil.getReaderConfig("isUseFont") === "yes"
+          isUseFont
+            ? ''
+            : settings.fontSize || 17
+        }px !important`,
+        'line-height': `${
+          // OtherUtil.getReaderConfig("isUseFont") === "yes"
+          isUseFont
+            ? ''
+            : settings.lineHeight || '1.25'
+        } !important`,
+        'font-family': `${
+          // OtherUtil.getReaderConfig("isUseFont") === "yes"
+          isUseFont
+            ? ''
+            : settings.fontFamily || 'Helvetica'
+        } !important`,
+        color: `${
+          // OtherUtil.getReaderConfig("theme") === "rgba(44,47,49,1)"
+          settings.theme === 'rgba(44,47,49,1)'
+            ? 'white'
+            : ''
+        } !important`,
+      },
+    });
+  }
+
 }

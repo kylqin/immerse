@@ -19,24 +19,24 @@ export class ButtonsComponent implements OnInit {
     const dialogRef = this.dialog.open(SettingsComponent, {
       width: '300px',
       data: {
-        theme: await this.configService.getItem('reader.theme'),
-        pageMode: await this.configService.getItem('reader.pageMode'),
-        pageScale: await this.configService.getItem('reader.pageScale'),
-        fontFamily: await this.configService.getItem('reader.fontFamily'),
-        fontSize: await this.configService.getItem('reader.fontSize'),
-        lineHeight: await this.configService.getItem('reader.lineHeight'),
+        theme: this.configService.getItem('reader.theme'),
+        pageMode: this.configService.getItem('reader.pageMode'),
+        pageScale: this.configService.getItem('reader.pageScale'),
+        fontFamily: this.configService.getItem('reader.fontFamily'),
+        fontSize: this.configService.getItem('reader.fontSize'),
+        lineHeight: this.configService.getItem('reader.lineHeight'),
       }
     });
 
     dialogRef.afterClosed().subscribe((readerConfigData) => {
       if (readerConfigData) {
-        console.log('readerConfigData', readerConfigData);
-        this.configService.setItem('reader.theme', readerConfigData.theme);
-        this.configService.setItem('reader.pageMode', readerConfigData.pageMode);
-        this.configService.setItem('reader.pageScale', readerConfigData.pageScale);
-        this.configService.setItem('reader.fontFamily', readerConfigData.fontFamily);
-        this.configService.setItem('reader.fontSize', readerConfigData.fontSize);
-        this.configService.setItem('reader.lineHeight', readerConfigData.lineHeight);
+        // console.log('readerConfigData', readerConfigData);
+        // this.configService.setItem('reader.theme', readerConfigData.theme);
+        // this.configService.setItem('reader.pageMode', readerConfigData.pageMode);
+        // this.configService.setItem('reader.pageScale', readerConfigData.pageScale);
+        // this.configService.setItem('reader.fontFamily', readerConfigData.fontFamily);
+        // this.configService.setItem('reader.fontSize', readerConfigData.fontSize);
+        // this.configService.setItem('reader.lineHeight', readerConfigData.lineHeight);
       }
     });
   }
