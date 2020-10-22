@@ -17,11 +17,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
+import { NavigationComponent } from './navigation/navigation.component';
+import { TocComponent } from './toc/toc.component';
 
 
 
 @NgModule({
-  declarations: [ReaderComponent, BackgroundComponent, SettingsComponent, ButtonsComponent],
+  declarations: [ReaderComponent, BackgroundComponent, SettingsComponent, ButtonsComponent, NavigationComponent, TocComponent],
   imports: [
     CommonModule,
     FormsModule,

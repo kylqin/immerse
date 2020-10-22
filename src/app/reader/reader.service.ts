@@ -2,16 +2,22 @@ import { Injectable } from '@angular/core';
 import { Book } from '../models/Book';
 import * as localforage from 'localforage';
 import * as SparkMD5 from 'spark-md5';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReaderService {
-
-  public currentBook: any = { key: '1603109063292' };
   private ePub = (window as any).ePub;
 
+  public currentBook: any = { key: '1603109063292' };
+
   public currentEpub = null;
+
+  public toc = new Subject();
+  public flattenedToc = null;
+  public notes = [];
+  public bookmarks = [];
 
   constructor() { }
 
@@ -23,13 +29,15 @@ export class ReaderService {
     } else {
       this.currentEpub = await this.doIncrementalTest(file);
     }
+    this.fetchChapters(this.currentEpub);
     return this.currentEpub;
   }
 
   private handleAddBook = (book: Book) => {
+    this.currentBook = book;
     return new Promise((resolve, reject) => {
       // let bookArr = this.props.books;
-      let bookArr
+      let bookArr;
 
       if (bookArr == null) {
         bookArr = [];
@@ -162,7 +170,6 @@ export class ReaderService {
                         md5,
                         cover
                       );
-                      this.currentBook = book;
                       await this.handleAddBook(book);
                       localforage.setItem(key, (e.target as any).result);
                       resolve(epub);
@@ -220,6 +227,22 @@ export class ReaderService {
     if (section && section.href) {
       this.currentEpub.rendition.display(section.href);
     }
+  }
+
+  /**
+   * navigation informations
+   * incluces: [chapters, bookmarks, notes]
+   */
+  private async fetchChapters(epub) {
+    epub.loaded.navigation
+      .then((chapters: any) => {
+        // this.toc = chapters.toc;
+        this.toc.next(chapters.toc);
+        this.flattenedToc = flatChapter(chapters.toc);
+      })
+      .catch(() => {
+        console.log('Error occurs');
+      });
   }
 
   // settings
@@ -322,4 +345,17 @@ export class ReaderService {
     });
   }
 
+}
+
+function flatChapter(chapters: any) {
+  let newChapter: any = [];
+  for (const chapter of chapters) {
+    if (chapter.subitems[0]) {
+      newChapter.push(chapter);
+      newChapter = newChapter.concat(flatChapter(chapter.subitems));
+    } else {
+      newChapter.push(chapter);
+    }
+  }
+  return newChapter;
 }

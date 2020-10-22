@@ -1,0 +1,94 @@
+<div class="reader-navigation">
+  <ng-template [ngIf]="isSearch" [ngIfElse]="nav">
+    <span
+      class="icon-close nav-close-icon"
+    ></span>
+    <div
+      class="header-search-container"
+      [ngStyle]="isSearch ? { left: 40 } : {}"
+    >
+      <div
+        class="navigation-search-title"
+        [ngStyle]="{height: '20px', margin: '0px 25px 13px'}"
+      >
+        Search the book
+      </div>
+      <!-- <SearchBox {...searchProps} /> -->
+    </div>
+    <ul class="nav-search-list">
+      <!-- {this.state.searchList ? this.renderSearchList() : null} -->
+    </ul>
+    <ul class="nav-search-page">
+      <!-- {this.state.searchList ? this.renderSearchPage() : null} -->
+    </ul>
+  </ng-template>
+
+  <ng-template #nav>
+    <div class="navigation-header">
+      <!-- <img class="book-cover" src={this.state.cover} alt="" /> -->
+      <p class="book-title">{{this.readerService.currentBook.name}}</p>
+      <p class="book-arthur">
+        Author:
+        <!-- <Trans>
+          {this.props.currentBook.author
+            ? this.props.currentBook.author
+            : "Unknown Authur"}
+        </Trans> -->
+      </p>
+      <span class="reading-duration">
+        <!-- <Trans>Reading Time</Trans>: {Math.floor(this.props.time / 60)}
+        &nbsp;
+        <Trans>Minute</Trans> -->
+      </span>
+      <div class="navigation-search-box">
+        <!-- <SearchBox {...searchProps} /> -->
+      </div>
+
+      <div class="navigation-navigation">
+        <span
+          class="book-content-title"
+          [ngStyle]="currentTab === 'contents' ? { color: 'rgba(112, 112, 112, 1)' } : { color: 'rgba(217, 217, 217, 1)' }"
+          (click)="changeTab('contents')"
+        >
+          <!-- <Trans>Content</Trans> -->
+          Contents
+        </span>
+        <span
+          class="book-bookmark-title"
+          [ngStyle]="currentTab === 'bookmarks' ? { color: 'rgba(112, 112, 112, 1)' } : { color: 'rgba(217, 217, 217, 1)' }"
+          (click)="changeTab('bookmarks')"
+        >
+          <!-- <Trans>Bookmark</Trans> -->
+          Bookmark
+        </span>
+        <span
+          class="book-bookmark-title"
+          [ngStyle]="currentTab === 'notes' ? { color: 'rgba(112, 112, 112, 1)' } : { color: 'rgba(217, 217, 217, 1)' }"
+          (click)="changeTab('notes')"
+        >
+          <!-- <Trans>Note</Trans> -->
+          Notes
+        </span>
+        <span
+          class="book-bookmark-title"
+          [ngStyle]="currentTab === 'digest' ? { color: 'rgba(112, 112, 112, 1)' } : { color: 'rgba(217, 217, 217, 1)' }"
+          (click)="changeTab('digest')"
+        >
+          <!-- <Trans>Digest</Trans> -->
+          Digests
+        </span>
+      </div>
+    </div>
+    <div class="navigation-body-parent">
+      <div class="navigation-body">
+        <app-reader-toc></app-reader-toc>
+        <!-- {this.state.currentTab === "contents" ? (
+          <ContentList />
+        ) : (
+          <BookNavList {...bookmarkProps} />
+        )} -->
+      </div>
+    </div>
+  </ng-template>
+</div>
+
