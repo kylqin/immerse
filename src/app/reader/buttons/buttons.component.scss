@@ -3,3 +3,31 @@
   top: 2px;
   right: 2px;
 }
+
+.buttons-next-previous {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+
+  button {
+    pointer-events: initial;
+    background-color: #cccccc33;
+    color: #ddd;
+    box-shadow: none;
+
+    &:hover {
+      box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12)
+    }
+  }
+
+  .button-previous {
+    position: absolute;
+    left: 10px;
+  }
+  .button-next {
+    position: absolute;
+    right: 10px;
+  }
+}

@@ -59,7 +59,6 @@ export class ReaderComponent implements OnInit {
     });
 
     this.configService.listen('reader.pageMode').subscribe(async (pageMode: string) => {
-      // this.readerService.setPageMode(pageMode);
       this.pageMode = pageMode;
       setTimeout(async () => {
         this.read(this.readerService.currentEpub, this.buildRenderOptions(pageMode), this.getSettings());

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsComponent } from '../settings/settings.component';
 import { ConfigService } from 'src/app/config/config.service';
+import { ReaderService } from '../reader.service';
 
 @Component({
   selector: 'app-reader-buttons',
@@ -10,7 +11,11 @@ import { ConfigService } from 'src/app/config/config.service';
 })
 export class ButtonsComponent implements OnInit {
 
-  constructor(public dialog: MatDialog, public configService: ConfigService) { }
+  constructor(
+    public dialog: MatDialog,
+    private configService: ConfigService,
+    private readerService: ReaderService,
+  ) { }
 
   ngOnInit(): void {
   }
@@ -39,6 +44,14 @@ export class ButtonsComponent implements OnInit {
         // this.configService.setItem('reader.lineHeight', readerConfigData.lineHeight);
       }
     });
+  }
+
+  previous() {
+    this.readerService.previousChapter();
+  }
+
+  next() {
+    this.readerService.nextChapter();
   }
 
 }
