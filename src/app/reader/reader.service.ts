@@ -10,7 +10,7 @@ import { Subject, BehaviorSubject } from 'rxjs';
 export class ReaderService {
   private ePub = (window as any).ePub;
 
-  public currentBook: any = { key: '1603109063292' };
+  public currentBook: any = { key: '1603109063292', name: 'Sarmantan' };
 
   public currentEpub = null;
 
@@ -18,6 +18,10 @@ export class ReaderService {
   public flattenedToc = null;
   public notes = [];
   public bookmarks = [];
+
+  public currentChapter = new BehaviorSubject('');
+  public leftPage = new BehaviorSubject('');
+  public rightPage = new BehaviorSubject('');
 
   constructor() { }
 
@@ -243,6 +247,26 @@ export class ReaderService {
       .catch(() => {
         console.log('Error occurs');
       });
+  }
+
+  public touchCurrentChapter(epub) {
+    const currentLocation = epub.rendition.currentLocation();
+    if (!currentLocation.start) {
+      return;
+    }
+
+    this.leftPage.next(currentLocation.start.displayed.page);
+    this.rightPage.next(currentLocation.end.displayed.page);
+
+    const chapterHref = currentLocation.start.href;
+    let chapter = 'Unknown Chapter';
+    const currentChapter = this.flattenedToc.filter(
+      (item: any) => item.href.split('#')[0] === chapterHref
+    )[0];
+    if (currentChapter) {
+      chapter = currentChapter.label.trim();
+    }
+    this.currentChapter.next(chapter);
   }
 
   // settings

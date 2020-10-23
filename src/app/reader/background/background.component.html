@@ -3,10 +3,10 @@
   [ngClass]="isSingleMode ? 'single' : ''"
   [ngStyle]="{'background-color': backgroundColor}"
 >
-  <p class="progress-chapter-name">Chapter 9</p>
-  <p *ngIf="!isSingleMode" class="progress-book-name">Sarmantan</p>
-  <p class="background-page-left">第 9 页</p>
-  <p *ngIf="!isSingleMode" class="background-page-right">第 10 页</p>
+  <p class="progress-chapter-name" [ngClass]="chapter">{{chapter}}</p>
+  <p *ngIf="!isSingleMode" class="progress-book-name">{{bookName}}</p>
+  <p class="background-page-left">第 {{leftPage}} 页</p>
+  <p *ngIf="!isSingleMode" class="background-page-right">第 {{rightPage}} 页</p>
   <!-- <div class="background-box2"></div>
   <div class="background-box3"></div> -->
   <div class="background-box1"></div>

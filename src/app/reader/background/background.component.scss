@@ -63,13 +63,13 @@
   right: 5px;
   top: 5px;
   bottom: 5px;
-  border: 1px solid rgba(191, 191, 191, 1);
-  box-shadow: 0 0 5px rgba(191, 191, 191, 1);
   z-index: 0;
 
   .single & {
     left: calc(50vw - 270px);
     right: calc(50vw - 270px);
+    border: 1px solid rgba(191, 191, 191, 1);
+    box-shadow: 0 0 5px rgba(191, 191, 191, 1);
   }
 }
 // .background-box2 {

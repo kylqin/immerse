@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ReaderService } from '../reader.service';
+import { ConfigService } from 'src/app/config/config.service';
 
 @Component({
   selector: 'app-reader-navigation',
@@ -7,14 +8,20 @@ import { ReaderService } from '../reader.service';
   styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent implements OnInit {
+  public backgroundColor = '';
   public isSearch = false;
   public currentTab = 'contents';
 
   constructor(
+    private configService: ConfigService,
     public readerService: ReaderService
   ) { }
 
   ngOnInit(): void {
+    this.backgroundColor = this.configService.getItem('reader.theme') as string;
+    this.configService.listen('reader.theme').subscribe((theme: string) => {
+      this.backgroundColor = theme;
+    });
   }
 
   changeTab(tab: string) {}

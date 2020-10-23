@@ -1,4 +1,4 @@
-<div class="reader-navigation">
+<div class="reader-navigation" [ngStyle]="{ 'background-color': backgroundColor }">
   <ng-template [ngIf]="isSearch" [ngIfElse]="nav">
     <span
       class="icon-close nav-close-icon"

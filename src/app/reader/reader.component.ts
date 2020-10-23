@@ -113,6 +113,7 @@ export class ReaderComponent implements OnInit {
   watchEpub(epub, settings) {
     // (window as any).rangy.init(); // 初始化
     epub.rendition.on('locationChanged', () => {
+      this.readerService.touchCurrentChapter(epub);
       // this.props.handleReadingEpub(epub);
       // this.props.handleOpenMenu(false);
       const currentLocation = epub.rendition.currentLocation();
@@ -125,13 +126,11 @@ export class ReaderComponent implements OnInit {
       //     ? true
       //     : false
       // );
-      console.log('locationChanged', currentLocation);
       if (this.readingProgress.locations) {
         const percentage = this.readingProgress.locations.percentageFromCfi(cfi);
         this.rlService.recordCfi(this.readerService.currentBook.key, cfi, percentage);
         this.readingProgress.percentage = percentage;
       }
-      // this.isFirst = false;
     });
     epub.rendition.on('rendered', () => {
       // this.setState({ loading: false });
