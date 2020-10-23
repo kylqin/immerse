@@ -3,6 +3,7 @@ import { ReaderService } from './reader.service';
 import { ConfigService } from '../config/config.service';
 import { ReadingLocationService } from './reading-location.service';
 import { ReadingProgress } from '../models/ReadingProgress';
+import { MouseService } from './mouse.service';
 
 @Component({
   selector: 'app-reader',
@@ -21,7 +22,9 @@ export class ReaderComponent implements OnInit {
   constructor(
     private rlService: ReadingLocationService,
     private readerService: ReaderService,
-    private configService: ConfigService) {}
+    private configService: ConfigService,
+    private mouseService: MouseService,
+    ) {}
 
   async ngOnInit() {
     this.watchSettings();
@@ -97,12 +100,16 @@ export class ReaderComponent implements OnInit {
 
     epub.renderTo('page-area', renderOptions);
 
+    // 监听 epub 事件
     this.watchEpub(epub, settings);
 
+    // 注册鼠标事件
+    this.mouseService.bind(epub, !(settings.pageMode === 'single' || settings.pageMode === 'double'));
+
+    // 设置 阅读设置
     this.readerService.applySettings(epub, settings);
 
-    console.log('curr location', this.rlService.getCfi(this.readerService.currentBook.key));
-
+    // 根据记录的阅读位置显示
     epub.rendition.display(
       this.rlService.getCfi(this.readerService.currentBook.key) === null
         ? null
