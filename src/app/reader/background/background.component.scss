@@ -68,8 +68,8 @@
   .single & {
     left: calc(50vw - 270px);
     right: calc(50vw - 270px);
-    border: 1px solid rgba(191, 191, 191, 1);
-    box-shadow: 0 0 5px rgba(191, 191, 191, 1);
+    // border: 1px solid rgba(191, 191, 191, 1);
+    box-shadow: 0 0 5px rgba(191, 191, 191, 0.5);
   }
 }
 // .background-box2 {
