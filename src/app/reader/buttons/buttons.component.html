@@ -12,6 +12,9 @@
   </div>
 
   <div class="buttons-top-right">
+    <button mat-icon-button (click)="toggleFullscreen()">
+      <mat-icon>{{isFullscreen ? 'fullscreen_exit' : 'fullscreen'}}</mat-icon>
+    </button>
     <button mat-icon-button (click)="openSettings()">
       <mat-icon>settings</mat-icon>
     </button>

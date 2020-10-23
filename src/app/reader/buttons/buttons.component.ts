@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SettingsComponent } from '../settings/settings.component';
 import { ConfigService } from 'src/app/config/config.service';
 import { ReaderService } from '../reader.service';
+import { enterFullscreen, exitFullscreen } from 'src/app/utils/fullscreen';
 
 @Component({
   selector: 'app-reader-buttons',
@@ -11,6 +12,7 @@ import { ReaderService } from '../reader.service';
 })
 export class ButtonsComponent implements OnInit {
   @Output() openNav = new EventEmitter<void>();
+  public isFullscreen = false;
 
   constructor(
     public dialog: MatDialog,
@@ -49,6 +51,15 @@ export class ButtonsComponent implements OnInit {
         // this.configService.setItem('reader.lineHeight', readerConfigData.lineHeight);
       }
     });
+  }
+
+  toggleFullscreen() {
+    this.isFullscreen = !this.isFullscreen;
+    if (this.isFullscreen) {
+      enterFullscreen();
+    } else {
+      exitFullscreen();
+    }
   }
 
   previous() {
