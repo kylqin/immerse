@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+import { LibraryRoutingModule } from './library/library-routing.module';
 import { ReaderRoutingModule } from './reader/reader-routing.module';
 
 
@@ -8,6 +9,7 @@ const routes: Routes = [];
 @NgModule({
   imports: [
     RouterModule.forRoot(routes),
+    LibraryRoutingModule,
     ReaderRoutingModule
   ],
   exports: [RouterModule]
