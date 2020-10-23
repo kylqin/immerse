@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SettingsComponent } from '../settings/settings.component';
 import { ConfigService } from 'src/app/config/config.service';
 import { ReaderService } from '../reader.service';
-import { enterFullscreen, exitFullscreen } from 'src/app/utils/fullscreen';
+import * as screenfull from 'screenfull';
 
 @Component({
   selector: 'app-reader-buttons',
@@ -18,10 +18,13 @@ export class ButtonsComponent implements OnInit {
     public dialog: MatDialog,
     private configService: ConfigService,
     private readerService: ReaderService,
-  ) { }
-
-  ngOnInit(): void {
+  ) {
+    (screenfull as screenfull.Screenfull).on('change', (e) => {
+      this.isFullscreen = (screenfull as screenfull.Screenfull).isFullscreen;
+    });
   }
+
+  ngOnInit(): void {}
 
   openNavigation() {
     this.openNav.emit();
@@ -54,12 +57,7 @@ export class ButtonsComponent implements OnInit {
   }
 
   toggleFullscreen() {
-    this.isFullscreen = !this.isFullscreen;
-    if (this.isFullscreen) {
-      enterFullscreen();
-    } else {
-      exitFullscreen();
-    }
+    (screenfull as screenfull.Screenfull).toggle();
   }
 
   previous() {
