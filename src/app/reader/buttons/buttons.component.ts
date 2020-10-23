@@ -52,11 +52,11 @@ export class ButtonsComponent implements OnInit {
   }
 
   previous() {
-    this.readerService.previousChapter();
+    this.readerService.prev(this.configService.getItem('reader.pageMode') as string);
   }
 
   next() {
-    this.readerService.nextChapter();
+    this.readerService.next(this.configService.getItem('reader.pageMode') as string);
   }
 
 }

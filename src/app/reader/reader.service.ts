@@ -217,6 +217,22 @@ export class ReaderService {
   }
 
   /* rendition utils */
+  public prev(pageMode: string) {
+    if (pageMode === 'single' || pageMode === 'double') {
+      this.currentEpub.rendition.prev();
+    } else {
+      this.nextChapter(-1);
+    }
+  }
+
+  public next(pageMode: string) {
+    if (pageMode === 'single' || pageMode === 'double') {
+      this.currentEpub.rendition.next();
+    } else {
+      this.nextChapter();
+    }
+  }
+
   public previousChapter() {
     this.nextChapter(-1);
   }
