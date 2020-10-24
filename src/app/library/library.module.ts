@@ -6,11 +6,12 @@ import { ButtonsComponent } from './buttons/buttons.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NgxFileDropModule } from 'ngx-file-drop';
+import { FiltersComponent } from './filters/filters.component';
 
 
 
 @NgModule({
-  declarations: [LibraryComponent, BookCardsComponent, ButtonsComponent],
+  declarations: [LibraryComponent, BookCardsComponent, ButtonsComponent, FiltersComponent],
   imports: [
     CommonModule,
     MatButtonModule,

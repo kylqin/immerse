@@ -1,10 +1,11 @@
 .book-cards {
   position: absolute;
-  top: 40px;
+  top: 46px;
   left: 180px;
   width: calc(100% - 180px);
-  height: calc(100% - 40px);
+  height: calc(100% - 46px);
   display: flex;
+  font-family: system-ui;
 }
 
 ngx-file-drop {
