@@ -5,7 +5,7 @@ import { ReaderComponent } from './reader.component';
 
 const routes: Routes = [
   {
-    path: 'reader',
+    path: 'reader/:key',
     component: ReaderComponent
   }
 ];

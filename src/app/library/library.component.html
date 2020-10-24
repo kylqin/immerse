@@ -1,1 +1,4 @@
-<p>library works!</p>
+<div>
+  <input type="file" (change)="selectBook($event)"/>
+  <app-lib-book-cards [books]="books"></app-lib-book-cards>
+</div>

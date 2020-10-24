@@ -4,6 +4,7 @@ import { ConfigService } from '../config/config.service';
 import { ReadingLocationService } from './reading-location.service';
 import { ReadingProgress } from '../models/ReadingProgress';
 import { MouseService } from './mouse.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-reader',
@@ -20,6 +21,7 @@ export class ReaderComponent implements OnInit {
   }
 
   constructor(
+    private route: ActivatedRoute,
     private rlService: ReadingLocationService,
     private readerService: ReaderService,
     private configService: ConfigService,
@@ -27,11 +29,13 @@ export class ReaderComponent implements OnInit {
     ) {}
 
   async ngOnInit() {
+    const key = this.route.snapshot.paramMap.get('key');
     this.watchSettings();
 
     const settings = this.getSettings();
 
-    this.read(await this.readerService.openBook(this.readerService.currentBook.key), this.buildRenderOptions(settings.pageMode), settings);
+    // this.read(await this.readerService.openBook(this.readerService.currentBook.key), this.buildRenderOptions(settings.pageMode), settings);
+    this.read(await this.readerService.openBook(key), this.buildRenderOptions(settings.pageMode), settings);
   }
 
   buildRenderOptions(pageMode: string) {

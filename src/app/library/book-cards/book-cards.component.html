@@ -1,0 +1,19 @@
+<div class="book-cards">
+  <div class="book-card" *ngFor="let book of books">
+    <div class="book-card-cover">
+      <img
+        class="book-card-cover-img"
+        [src]="book.cover !== 'noCover' ? book.cover : 'assets/cover.svg'"
+        alt=""
+        (click)="openBook(book)"
+      />
+      <p class="book-card-cover-title" *ngIf="book.cover === 'noCover'"><span>{{book.name}}</span></p>
+    </div>
+    <div class="book-card-title"><span>{{book.name}}</span></div>
+  </div>
+</div>
+
+<!-- <ng-template #emptyCover>
+  <div class="book-card-cover">No Cover</div>
+  {{book.name}}
+</ng-template> -->
