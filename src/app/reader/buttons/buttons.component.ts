@@ -4,6 +4,7 @@ import { SettingsComponent } from '../settings/settings.component';
 import { ConfigService } from 'src/app/config/config.service';
 import { ReaderService } from '../reader.service';
 import * as screenfull from 'screenfull';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reader-buttons',
@@ -15,6 +16,7 @@ export class ButtonsComponent implements OnInit {
   public isFullscreen = false;
 
   constructor(
+    private router: Router,
     public dialog: MatDialog,
     private configService: ConfigService,
     private readerService: ReaderService,
@@ -45,6 +47,10 @@ export class ButtonsComponent implements OnInit {
 
     // dialogRef.afterClosed().subscribe((readerConfigData) => {
     // });
+  }
+
+  goLibrary() {
+    this.router.navigate(['/']);
   }
 
   toggleFullscreen() {
