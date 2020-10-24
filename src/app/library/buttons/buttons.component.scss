@@ -1,0 +1,39 @@
+.app-name {
+  display: inline-block;
+  font-size: 24px;
+  color: #ff4081;
+  margin: 10px;
+}
+
+.lib-buttons {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 46px;
+  border-bottom: 1px solid #c0c0c044;
+}
+
+.buttons-left,
+.buttons-right {
+  top: 2px;
+  position: absolute;
+}
+
+.buttons-left {
+  left: 2px;
+}
+
+.buttons-right {
+  right: 2px;
+}
+
+.hidden-file-input {
+    background: transparent;
+    /* visibility: hidden; */
+    opacity: 0;
+    width: 24px;
+    height: 24px;
+    position: relative;
+    left: -24px;
+}

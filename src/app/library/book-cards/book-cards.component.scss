@@ -1,5 +1,21 @@
 .book-cards {
+  position: absolute;
+  top: 40px;
+  left: 180px;
+  width: calc(100% - 180px);
+  height: calc(100% - 40px);
   display: flex;
+}
+
+ngx-file-drop {
+  width: 100%;
+  height: 100%;
+}
+
+.book-card-grid {
+  display: flex;
+  width: 100%;
+  height: 100%;
 }
 
 .book-card {

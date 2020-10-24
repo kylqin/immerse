@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "~10.1.6",
     "@angular/router": "~10.1.6",
     "localforage": "^1.9.0",
+    "ngx-file-drop": "^10.0.0",
     "rxjs": "~6.6.3",
     "screenfull": "^5.0.2",
     "spark-md5": "^3.0.1",

@@ -1,19 +1,28 @@
 <div class="book-cards">
-  <div class="book-card" *ngFor="let book of books">
-    <div class="book-card-cover">
-      <img
-        class="book-card-cover-img"
-        [src]="book.cover !== 'noCover' ? book.cover : 'assets/cover.svg'"
-        alt=""
-        (click)="openBook(book)"
-      />
-      <p class="book-card-cover-title" *ngIf="book.cover === 'noCover'"><span>{{book.name}}</span></p>
+  <ngx-file-drop
+    dropZoneLabel="Drop files here"
+    dropZoneClassName="drop-zone-class"
+    contentClassName="drop-zone-content-class"
+    (onFileDrop)="droped($event)"
+    (onFileOver)="fileOver($event)"
+    (onFileLeave)="fileLeave($event)"
+    accept=".epub"
+  >
+  <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+    <div class="book-card-grid">
+      <div class="book-card" *ngFor="let book of books">
+        <div class="book-card-cover">
+          <img
+            class="book-card-cover-img"
+            [src]="book.cover !== 'noCover' ? book.cover : 'assets/cover.svg'"
+            alt=""
+            (click)="openBook(book)"
+          />
+          <p class="book-card-cover-title" *ngIf="book.cover === 'noCover'"><span>{{book.name}}</span></p>
+        </div>
+        <div class="book-card-title"><span>{{book.name}}</span></div>
+      </div>
     </div>
-    <div class="book-card-title"><span>{{book.name}}</span></div>
-  </div>
+  </ng-template>
+  </ngx-file-drop>
 </div>
-
-<!-- <ng-template #emptyCover>
-  <div class="book-card-cover">No Cover</div>
-  {{book.name}}
-</ng-template> -->
