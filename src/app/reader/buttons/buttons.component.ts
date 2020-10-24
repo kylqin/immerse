@@ -43,17 +43,8 @@ export class ButtonsComponent implements OnInit {
       }
     });
 
-    dialogRef.afterClosed().subscribe((readerConfigData) => {
-      if (readerConfigData) {
-        // console.log('readerConfigData', readerConfigData);
-        // this.configService.setItem('reader.theme', readerConfigData.theme);
-        // this.configService.setItem('reader.pageMode', readerConfigData.pageMode);
-        // this.configService.setItem('reader.pageScale', readerConfigData.pageScale);
-        // this.configService.setItem('reader.fontFamily', readerConfigData.fontFamily);
-        // this.configService.setItem('reader.fontSize', readerConfigData.fontSize);
-        // this.configService.setItem('reader.lineHeight', readerConfigData.lineHeight);
-      }
-    });
+    // dialogRef.afterClosed().subscribe((readerConfigData) => {
+    // });
   }
 
   toggleFullscreen() {

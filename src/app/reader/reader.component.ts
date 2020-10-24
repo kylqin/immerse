@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ReaderService } from './reader.service';
 import { ConfigService } from '../config/config.service';
 import { ReadingLocationService } from './reading-location.service';
 import { ReadingProgress } from '../models/ReadingProgress';
 import { MouseService } from './mouse.service';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-reader',
   templateUrl: './reader.component.html',
   styleUrls: ['./reader.component.scss'],
 })
-export class ReaderComponent implements OnInit {
+export class ReaderComponent implements OnInit, OnDestroy {
+  private subscribesForSettings: Subscription[] = [];
   private pageMode = 'continuous';
 
   private readingProgress = new ReadingProgress();
@@ -30,12 +32,19 @@ export class ReaderComponent implements OnInit {
 
   async ngOnInit() {
     const key = this.route.snapshot.paramMap.get('key');
-    this.watchSettings();
 
     const settings = this.getSettings();
 
-    // this.read(await this.readerService.openBook(this.readerService.currentBook.key), this.buildRenderOptions(settings.pageMode), settings);
     this.read(await this.readerService.openBook(key), this.buildRenderOptions(settings.pageMode), settings);
+
+    // 要在第一 read 只后再监听 settings, 避免两次“几乎同时” read,
+    // 造成在 [epub 渲染 dom: 即 #page-area] 上生成两个 [epub文档dom: 即 .epub-container].
+    this.watchSettings();
+  }
+
+  ngOnDestroy() {
+    // 记得，watch settings 变化，避免 read 生成多个 [epub文档dom: 即 .epub-container].
+    this.unwatchSettings();
   }
 
   buildRenderOptions(pageMode: string) {
@@ -53,33 +62,45 @@ export class ReaderComponent implements OnInit {
       snap: true,
     };
 
-    console.log('pageMode', this.pageMode);
-    console.log('isSingleMode', this.isSingleMode);
-    console.log('options', options);
+    // console.log('pageMode', this.pageMode);
+    // console.log('isSingleMode', this.isSingleMode);
+    // console.log('options', options);
 
     return options;
   }
 
   watchSettings() {
-    this.configService.listen('reader.theme').subscribe((theme: string) => {
-      this.readerService.setTheme(theme);
-    });
+    this.subscribesForSettings = [
+      this.configService.listen('reader.theme').subscribe((theme: string) => {
+        this.readerService.setTheme(theme);
+      }),
 
-    this.configService.listen('reader.pageMode').subscribe(async (pageMode: string) => {
-      this.pageMode = pageMode;
-      setTimeout(async () => {
-        this.read(this.readerService.currentEpub, this.buildRenderOptions(pageMode), this.getSettings());
-      }, 0);
-    });
+      this.configService.listen('reader.pageMode').subscribe(async (pageMode: string) => {
+        if (this.pageMode === pageMode) {
+          return;
+        }
 
-    this.configService.listen('reader.fontSize').subscribe((fontSize: string) => {
-      this.readerService.setFontSize(Number(fontSize));
-    });
-    this.configService.listen('reader.fontFamily').subscribe((fontFamily: string) => {
-      this.readerService.setFontFamily(fontFamily);
-    });
-    this.configService.listen('reader.lineHeight').subscribe((lineHeight: string) => {
-      this.readerService.setLineHeight(Number(lineHeight));
+        this.pageMode = pageMode;
+        setTimeout(async () => {
+          this.read(this.readerService.currentEpub, this.buildRenderOptions(pageMode), this.getSettings());
+        }, 0);
+      }),
+
+      this.configService.listen('reader.fontSize').subscribe((fontSize: string) => {
+        this.readerService.setFontSize(Number(fontSize));
+      }),
+      this.configService.listen('reader.fontFamily').subscribe((fontFamily: string) => {
+        this.readerService.setFontFamily(fontFamily);
+      }),
+      this.configService.listen('reader.lineHeight').subscribe((lineHeight: string) => {
+        this.readerService.setLineHeight(Number(lineHeight));
+      }),
+    ];
+  }
+
+  unwatchSettings() {
+    this.subscribesForSettings.forEach(subscription => {
+      subscription.unsubscribe();
     });
   }
 
