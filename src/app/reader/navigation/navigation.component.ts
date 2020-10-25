@@ -12,6 +12,9 @@ export class NavigationComponent implements OnInit {
   public isSearch = false;
   public currentTab = 'contents';
 
+  public get bookName () { return this.readerService.currentBook ? this.readerService.currentBook.name : ''; }
+  public get author () { return this.readerService.currentBook ? this.readerService.currentBook.author : ''; }
+
   constructor(
     private configService: ConfigService,
     public readerService: ReaderService

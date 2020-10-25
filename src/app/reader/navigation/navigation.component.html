@@ -26,13 +26,10 @@
   <ng-template #nav>
     <div class="navigation-header">
       <!-- <img class="book-cover" src={this.state.cover} alt="" /> -->
-      <p class="book-title">{{this.readerService.currentBook.name}}</p>
+      <p class="book-title">{{bookName}}</p>
       <p class="book-arthur">
-        Author:
+        Author: {{author}}
         <!-- <Trans>
-          {this.props.currentBook.author
-            ? this.props.currentBook.author
-            : "Unknown Authur"}
         </Trans> -->
       </p>
       <span class="reading-duration">

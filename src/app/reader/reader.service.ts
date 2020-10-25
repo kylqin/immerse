@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import * as localforage from 'localforage';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { LibraryService } from '../library/services/library.service';
+import { Book } from '../models/Book';
+import { distinct } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -9,38 +11,47 @@ import { LibraryService } from '../library/services/library.service';
 export class ReaderService {
   private ePub = (window as any).ePub;
 
-  public currentBook: any = { key: '1603109063292', name: 'Sarmantan' };
+  public bookSubject: Subject<Book> = new Subject();
+  public currentBook: Book = null;
 
   public currentEpub = null;
 
-  public toc = new BehaviorSubject([]);
+  public tocSubject = new BehaviorSubject([]);
   public flattenedToc = null;
   public notes = [];
   public bookmarks = [];
 
-  public currentChapter = new BehaviorSubject('');
-  public leftPage = new BehaviorSubject('');
-  public rightPage = new BehaviorSubject('');
+  public chapterSubject = new BehaviorSubject('');
+  public leftPageSubject = new BehaviorSubject('');
+  public rightPageSubject = new BehaviorSubject('');
 
   constructor(
     private libraryService: LibraryService
-  ) { }
+  ) {
+    this.bookSubject.pipe(distinct()).subscribe((book) => {
+      this.currentBook = book;
+    });
+  }
 
   public async openBook(key: string);
   public async openBook(url: string);
   public async openBook(file: any) {
     if (typeof file === 'string') {
       this.currentEpub = this.ePub(await localforage.getItem(file));
-      this.currentBook = this.libraryService.getBook(file);
+      this.bookSubject.next(await this.libraryService.getBook(file));
     } else {
       [this.currentEpub, this.currentBook] = await this.libraryService.importBookFile(file);
+      this.bookSubject.next(this.currentBook);
     }
     this.fetchChapters(this.currentEpub);
     return this.currentEpub;
   }
 
-  // 获取书籍md5
   /* rendition utils */
+  public jump(href: string) {
+    this.currentEpub.rendition.display(href);
+  }
+
   public prev(pageMode: string) {
     if (pageMode === 'single' || pageMode === 'double') {
       this.currentEpub.rendition.prev();
@@ -81,7 +92,7 @@ export class ReaderService {
     epub.loaded.navigation
       .then((chapters: any) => {
         // this.toc = chapters.toc;
-        this.toc.next(chapters.toc);
+        this.tocSubject.next(chapters.toc);
         this.flattenedToc = flatChapter(chapters.toc);
       })
       .catch(() => {
@@ -95,18 +106,18 @@ export class ReaderService {
       return;
     }
 
-    this.leftPage.next(currentLocation.start.displayed.page);
-    this.rightPage.next(currentLocation.end.displayed.page);
+    this.leftPageSubject.next(currentLocation.start.displayed.page);
+    this.rightPageSubject.next(currentLocation.end.displayed.page);
 
     const chapterHref = currentLocation.start.href;
     let chapter = 'Unknown Chapter';
-    const currentChapter = this.flattenedToc.filter(
+    const chapterSbj = this.flattenedToc.filter(
       (item: any) => item.href.split('#')[0] === chapterHref
     )[0];
-    if (currentChapter) {
-      chapter = currentChapter.label.trim();
+    if (chapterSbj) {
+      chapter = chapterSbj.label.trim();
     }
-    this.currentChapter.next(chapter);
+    this.chapterSubject.next(chapter);
   }
 
   // settings

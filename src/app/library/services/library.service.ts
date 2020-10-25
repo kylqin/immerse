@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import * as SparkMD5 from 'spark-md5';
 import { MessageService } from 'src/app/message.service';
 import { Book } from 'src/app/models/Book';
+import { skip } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ import { Book } from 'src/app/models/Book';
 export class LibraryService {
   private ePub = (window as any).ePub;
 
+  private booksIsLoaded = false;
   private books: Book[] = [];
   public booksSubject = new BehaviorSubject([]);
 
@@ -30,8 +32,13 @@ export class LibraryService {
     return this.books;
   }
 
-  public getBook(key: string) {
-    return this.books.find(book => book.key === key);
+  public async getBook(key: string) {
+    if (this.booksIsLoaded) {
+      return this.books.find(book => book.key === key);
+    } else {
+      const books = await this.loadBooks();
+      return books.find(book => book.key === key);
+    }
   }
 
   public bookExists(md5: string|Book): boolean {
@@ -44,6 +51,7 @@ export class LibraryService {
   public async loadBooks() {
     this.books = await localforage.getItem('books');
     this.booksSubject.next(this.books);
+    this.booksIsLoaded = true;
     return this.books;
   }
 
@@ -51,6 +59,7 @@ export class LibraryService {
     return await this.doIncrementalTest(file);
   }
 
+  // 获取书籍md5
   private doIncrementalTest(file: any): Promise<[any, Book]> {
     return new Promise((resolve, reject) => {
       // 这里假设直接将文件选择框的dom引用传入

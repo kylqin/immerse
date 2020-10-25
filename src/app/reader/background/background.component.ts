@@ -30,8 +30,6 @@ export class BackgroundComponent implements OnInit {
     this.watchSettings();
     this.watchInfo();
 
-    this.bookName = this.readerService.currentBook.name;
-
     this.backgroundColor = this.configService.getItem('reader.theme') as string;
     this.pageMode = this.configService.getItem('reader.pageMode') as string;
    }
@@ -47,15 +45,19 @@ export class BackgroundComponent implements OnInit {
   }
 
   watchInfo() {
-    this.readerService.currentChapter.subscribe(chapter => {
+    this.readerService.bookSubject.subscribe(book => {
+      this.bookName = book.name;
+    });
+
+    this.readerService.chapterSubject.subscribe(chapter => {
       this.chapter = chapter;
       // see: https://zhuanlan.zhihu.com/p/100038957
       this.changeDetectorRef.detectChanges();
     });
-    this.readerService.leftPage.subscribe(leftPage => {
+    this.readerService.leftPageSubject.subscribe(leftPage => {
       this.leftPage = leftPage;
     });
-    this.readerService.rightPage.subscribe(rightPage => {
+    this.readerService.rightPageSubject.subscribe(rightPage => {
       this.rightPage = rightPage;
       document.documentElement.click();
     });

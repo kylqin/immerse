@@ -13,7 +13,7 @@ export class TocComponent implements OnInit {
   constructor(private readerService: ReaderService) { }
 
   ngOnInit(): void {
-    this.readerService.toc.subscribe((toc) => {
+    this.readerService.tocSubject.subscribe((toc) => {
       this.toc = toc;
     });
   }
@@ -21,9 +21,7 @@ export class TocComponent implements OnInit {
   jump(event: any) {
     event.preventDefault();
     const href = event.target.getAttribute('href');
-    console.log('href', href);
-    // this.readerService.jump(href);
-    this.readerService.currentEpub.rendition.display(href);
+    this.readerService.jump(href);
   }
 
   toggleSubtree(index: number) {
