@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LibraryModule } from './library/library.module';
@@ -16,9 +17,10 @@ import { ReaderModule } from './reader/reader.module';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    MatSnackBarModule,
+    MatProgressSpinnerModule,
     LibraryModule,
     ReaderModule,
-    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MessageService } from './message.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'immerse';
+  showSpinner = false;
+
+  constructor(private msgService: MessageService) {
+    this.msgService.spinnerSubject.subscribe(show => {
+      this.showSpinner = show;
+    });
+  }
 }

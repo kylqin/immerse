@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FileSystemFileEntry, NgxFileDropEntry } from 'ngx-file-drop';
 import { Book } from 'src/app/models/Book';
 import { LibraryService } from '../services/library.service';
+import { MessageService } from 'src/app/message.service';
 
 @Component({
   selector: 'app-lib-book-cards',
@@ -14,6 +15,7 @@ export class BookCardsComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private msgService: MessageService,
     private libraryService: LibraryService
   ) { }
 
@@ -26,16 +28,21 @@ export class BookCardsComponent implements OnInit {
 
   public droped(files: NgxFileDropEntry[]) {
     console.log(files);
+    this.msgService.startSpinner();
 
+    let importedCount = 1;
     for (const droppedFile of files) {
       // Is it a file?
       if (droppedFile.fileEntry.isFile) {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
         fileEntry.file(async (file: File) => {
-
           // Here you can access the real file
           // console.log(droppedFile.relativePath, file);
           await this.libraryService.importBookFile(file);
+          importedCount += 1;
+          if (importedCount >= files.length) {
+            this.msgService.stopSpinner();
+          }
         });
       } else {
         // It was a directory (empty directories are added, otherwise only files)

@@ -6,6 +6,7 @@ import { ReadingProgress } from '../models/ReadingProgress';
 import { MouseService } from './mouse.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'app-reader',
@@ -24,6 +25,7 @@ export class ReaderComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
+    private msgService: MessageService,
     private rlService: ReadingLocationService,
     private readerService: ReaderService,
     private configService: ConfigService,
@@ -33,6 +35,7 @@ export class ReaderComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     const key = this.route.snapshot.paramMap.get('key');
 
+    // this.msgService.startSpinner();
     const settings = this.getSettings();
 
     this.read(await this.readerService.openBook(key), this.buildRenderOptions(settings.pageMode), settings);
@@ -115,6 +118,7 @@ export class ReaderComponent implements OnInit, OnDestroy {
   }
 
   read(epub, renderOptions, settings) {
+    this.msgService.startSpinner();
     this.readingProgress.fetchLocations(epub);
 
     const pageArea = document.getElementById('page-area');
@@ -177,6 +181,8 @@ export class ReaderComponent implements OnInit, OnDestroy {
       // 造成在 [epub 渲染 dom: 即 #page-area] 上生成两个 [epub文档dom: 即 .epub-container].
       this.watchSettings();
       // ReaderConfig.addDefaultCss();
+
+      this.msgService.stopSpinner();
     });
     epub.rendition.on('selected', (cfiRange: any, contents: any) => {
       const range = contents.range(cfiRange);

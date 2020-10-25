@@ -49,9 +49,11 @@ export class LibraryService {
   }
 
   public async loadBooks() {
+    this.msgService.startSpinner();
     this.books = await localforage.getItem('books');
     this.booksSubject.next(this.books);
     this.booksIsLoaded = true;
+    this.msgService.stopSpinner();
     return this.books;
   }
 
