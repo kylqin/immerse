@@ -143,3 +143,18 @@ ngx-file-drop {
   width: 106px;
   height: 38px;
 }
+
+.drop-over-info {
+  z-index: 999;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.2rem;
+  color: #fff;
+  background: #422d2d44;
+  box-shadow: 0 0 74px 15px #1d1a1abd;
+  padding: 8px 20px;
+  border-radius: 10px;
+  font-family: system-ui;
+}

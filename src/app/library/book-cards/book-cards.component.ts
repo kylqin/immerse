@@ -13,6 +13,8 @@ import { MessageService } from 'src/app/message.service';
 export class BookCardsComponent implements OnInit {
   @Input() public books: Book[];
 
+  public isFileOver = false;
+
   constructor(
     private router: Router,
     private msgService: MessageService,
@@ -28,6 +30,7 @@ export class BookCardsComponent implements OnInit {
 
   public droped(files: NgxFileDropEntry[]) {
     console.log(files);
+    this.isFileOver = false;
     this.msgService.startSpinner();
 
     let importedCount = 1;
@@ -54,10 +57,12 @@ export class BookCardsComponent implements OnInit {
 
   public fileOver(event) {
     console.log('over', event);
+    this.isFileOver = true;
   }
 
   public fileLeave(event) {
     console.log('leave', event);
+    this.isFileOver = false;
   }
 
 }

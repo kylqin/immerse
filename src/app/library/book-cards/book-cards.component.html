@@ -23,6 +23,7 @@
         <div class="book-card-title"><span>{{book.name}}</span></div>
       </div>
     </div>
+    <div *ngIf="isFileOver" class="drop-over-info">Release to Add books to Library</div>
   </ng-template>
   </ngx-file-drop>
 </div>
