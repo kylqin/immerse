@@ -36,10 +36,6 @@ export class ReaderComponent implements OnInit, OnDestroy {
     const settings = this.getSettings();
 
     this.read(await this.readerService.openBook(key), this.buildRenderOptions(settings.pageMode), settings);
-
-    // 要在第一 read 只后再监听 settings, 避免两次“几乎同时” read,
-    // 造成在 [epub 渲染 dom: 即 #page-area] 上生成两个 [epub文档dom: 即 .epub-container].
-    this.watchSettings();
   }
 
   ngOnDestroy() {
@@ -69,7 +65,13 @@ export class ReaderComponent implements OnInit, OnDestroy {
     return options;
   }
 
+  /**
+   * 监听阅读设置的变化，同步设置到阅读界面
+   */
   watchSettings() {
+    // 去掉之前的监听，避免重复
+    this.unwatchSettings();
+
     this.subscribesForSettings = [
       this.configService.listen('reader.theme').subscribe((theme: string) => {
         this.readerService.setTheme(theme);
@@ -82,6 +84,8 @@ export class ReaderComponent implements OnInit, OnDestroy {
 
         this.pageMode = pageMode;
         setTimeout(async () => {
+          // 书籍内容页面模式变更时，需要重新渲染内容，且使用 setTimeout, 将渲染人物排到"浏览器重排"之后
+          // 书籍内容页面模式变化后，书籍内容页面尺寸发生变化，会引起浏览器重排和重绘
           this.read(this.readerService.currentEpub, this.buildRenderOptions(pageMode), this.getSettings());
         }, 0);
       }),
@@ -110,17 +114,11 @@ export class ReaderComponent implements OnInit, OnDestroy {
     return settings;
   }
 
-  async selectBook(event) {
-    const file = event.target.files[0]
-    const epub = await this.readerService.openBook(file);
-    const settings = this.getSettings();
-    this.read(epub, this.buildRenderOptions(settings.pageMode), settings);
-  }
-
   read(epub, renderOptions, settings) {
     this.readingProgress.fetchLocations(epub);
 
     const pageArea = document.getElementById('page-area');
+    // 删除原来的渲染结果，避免渲染多个
     pageArea.innerHTML = '';
 
     epub.renderTo('page-area', renderOptions);
@@ -174,6 +172,10 @@ export class ReaderComponent implements OnInit, OnDestroy {
       if (!doc) {
         return;
       }
+
+      // 要在第一 read 只后再监听 settings, 避免两次“几乎同时” read,
+      // 造成在 [epub 渲染 dom: 即 #page-area] 上生成两个 [epub文档dom: 即 .epub-container].
+      this.watchSettings();
       // ReaderConfig.addDefaultCss();
     });
     epub.rendition.on('selected', (cfiRange: any, contents: any) => {
