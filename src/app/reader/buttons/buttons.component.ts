@@ -30,10 +30,12 @@ export class ButtonsComponent implements OnInit {
 
   openNavigation() {
     this.openNav.emit();
+    // 不知怎的，这个按钮没有自动 blur。
+    (document.activeElement as any).blur();
   }
 
   async openSettings() {
-    const dialogRef = this.dialog.open(SettingsComponent, {
+    this.dialog.open(SettingsComponent, {
       width: '300px',
       data: {
         theme: this.configService.getItem('reader.theme'),
@@ -44,9 +46,6 @@ export class ButtonsComponent implements OnInit {
         lineHeight: this.configService.getItem('reader.lineHeight'),
       }
     });
-
-    // dialogRef.afterClosed().subscribe((readerConfigData) => {
-    // });
   }
 
   goLibrary() {
