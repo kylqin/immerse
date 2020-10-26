@@ -23,7 +23,7 @@ export class LibraryService {
   }
 
   public addBook(book: Book) {
-    this.books = this.books.concat([book]);
+    this.books = (this.books || []).concat([book]);
     this.booksSubject.next(this.books);
     localforage.setItem('books', this.books);
   }
@@ -36,7 +36,7 @@ export class LibraryService {
     if (this.booksIsLoaded) {
       return this.books.find(book => book.key === key);
     } else {
-      const books = await this.loadBooks();
+      const books = await this.loadBooks() || [];
       return books.find(book => book.key === key);
     }
   }
@@ -50,7 +50,7 @@ export class LibraryService {
 
   public async loadBooks() {
     this.msgService.startSpinner();
-    this.books = await localforage.getItem('books');
+    this.books = await localforage.getItem('books') || [];
     this.booksSubject.next(this.books);
     this.booksIsLoaded = true;
     this.msgService.stopSpinner();
