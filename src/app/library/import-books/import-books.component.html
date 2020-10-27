@@ -5,8 +5,8 @@
     dropZoneClassName="import-books-drop-zone-class"
     contentClassName="import-books-drop-zone-content-class"
     (onFileDrop)="droped($event)"
-    (onFileOver)="fileOver($event)"
-    (onFileLeave)="fileLeave($event)"
+    (onFileOver)="fileOver()"
+    (onFileLeave)="fileLeave()"
     accept=".epub"
   >
   <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
