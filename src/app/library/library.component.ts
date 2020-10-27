@@ -14,7 +14,7 @@ export class LibraryComponent implements OnInit {
   constructor(
     private libraryService: LibraryService,
   ) {
-    libraryService.booksSubject.subscribe(books => {
+    this.libraryService.booksSubject.subscribe(books => {
       this.books = books;
       console.log('books', books);
     });

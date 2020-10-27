@@ -1,0 +1,35 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+div[mat-dialog-content] {
+  flex-grow: 1;
+}
+
+.hidden-file-input {
+    background: transparent;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+}
+
+.hint-and-actions, .uploading {
+  text-align: center;
+  margin: auto;
+}
+
+.hint-and-actions {
+  color: #80808066;
+}
+
+.uploading {
+  width: calc(100% - 48px);
+  div {
+    color: gray;
+    margin-bottom: 10px;
+  }
+}

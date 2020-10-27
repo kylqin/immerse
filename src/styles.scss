@@ -32,6 +32,24 @@
   padding: 0;
 }
 
+.import-books-drop-zone-class {
+  height: calc(100% - 20px);
+  border: 4px dashed #8080802e;
+
+  .file-over & {
+    border: 4px dashed #ff4081;
+  }
+
+  &.ngx-file-drop__drop-zone--over {
+    background-color: transparent!important;
+  }
+
+  .import-books-drop-zone-content-class {
+    height: 100%;
+    display: flex;
+  }
+}
+
 .book-cords-drop-zone-class,
 .book-cords-drop-zone-content-class {
   width: 100%;

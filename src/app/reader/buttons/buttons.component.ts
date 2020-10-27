@@ -29,7 +29,7 @@ export class ButtonsComponent implements OnInit {
   ngOnInit(): void {}
 
   openNavigation() {
-    const dialog = this.dialog.open(NavigationComponent, {
+    this.dialog.open(NavigationComponent, {
       autoFocus: false,
       position: {
         top: '40px',
@@ -40,8 +40,6 @@ export class ButtonsComponent implements OnInit {
       width: '340px',
       height: 'calc(100vh - 60px)',
       data: {}
-    });
-    dialog.afterOpened().subscribe(() => {
     });
   }
 

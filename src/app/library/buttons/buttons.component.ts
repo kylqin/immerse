@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { LibraryService } from '../services/library.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ImportBooksComponent } from '../import-books/import-books.component';
 
 @Component({
   selector: 'app-lib-buttons',
@@ -9,14 +10,20 @@ import { LibraryService } from '../services/library.service';
 export class ButtonsComponent implements OnInit {
 
   constructor(
-    private libraryService: LibraryService
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
   }
 
-  async importBookFromLocal(event) {
-    const file = event.target.files[0]
-    await this.libraryService.importBookFile(file);
+  openImportDialog() {
+    this.dialog.open(ImportBooksComponent, {
+      hasBackdrop: false,
+      autoFocus: false,
+      width: 'calc(100vw - 460px)',
+      height: 'calc(100vh - 200px)',
+      maxWidth: '1000px',
+      maxHeight: '600px',
+    });
   }
 }

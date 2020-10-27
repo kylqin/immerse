@@ -1,0 +1,37 @@
+<h1 mat-dialog-title>Select Files</h1>
+<div mat-dialog-content [ngClass]="isFileOver ? 'file-over' : ''">
+  <ngx-file-drop
+    dropZoneLabel="Drop files here"
+    dropZoneClassName="import-books-drop-zone-class"
+    contentClassName="import-books-drop-zone-content-class"
+    (onFileDrop)="droped($event)"
+    (onFileOver)="fileOver($event)"
+    (onFileLeave)="fileLeave($event)"
+    accept=".epub"
+  >
+  <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+    <!-- <div *ngIf="isFileOver" class="drop-over-info">Release to Add books to Library</div> -->
+    <div *ngIf="status === 'waiting'" class="hint-and-actions">
+      <h1>Drag epub files here</h1>
+      <p>or you can selec files...</p>
+      <button mat-flat-button color="accent">
+        Select files on your device
+        <input class="hidden-file-input" type="file" (change)="importBookFromLocal($event)"/>
+      </button>
+    </div>
+
+    <div *ngIf="status === 'uploading'" class="uploading">
+      <div>Uplading...</div>
+      <mat-progress-bar mode="determinate" [value]="uploadProgress"></mat-progress-bar>
+    </div>
+
+    <div *ngIf="status === 'ready'" class="ready">
+      Ready
+    </div>
+  </ng-template>
+  </ngx-file-drop>
+</div>
+<div mat-dialog-actions>
+  <!-- <button mat-flat-button color="accent" [mat-dialog-close]="data" cdkFocusInitial>Ok</button> -->
+  <button mat-flat-button mat-dialog-close>Cancel</button>
+</div>

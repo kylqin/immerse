@@ -57,12 +57,12 @@ export class LibraryService {
     return this.books;
   }
 
-  public async importBookFile(file: File): Promise<[any, Book]> {
-    return await this.doIncrementalTest(file);
+  public async importBookFile(file: File, progressCallback: (percent: number) => void = (p) => {}): Promise<[any, Book]> {
+    return await this.doIncrementalTest(file, progressCallback);
   }
 
   // 获取书籍md5
-  private doIncrementalTest(file: any): Promise<[any, Book]> {
+  private doIncrementalTest(file: any, progressCallback: (percent: number) => void): Promise<[any, Book]> {
     return new Promise((resolve, reject) => {
       // 这里假设直接将文件选择框的dom引用传入
       // 这里需要用到File的slice( )方法，以下是兼容写法
@@ -88,9 +88,11 @@ export class LibraryService {
           spark.appendBinary((e.target as any).result as any); // append array buffer
           currentChunk += 1;
           if (currentChunk < chunks) {
+            progressCallback(currentChunk / chunks);
             loadNext();
           } else {
             const md5 = spark.end(); // 完成计算，返回结果
+            progressCallback(100);
             resolve(await this.storeFileAndCreateBook(file, md5));
           }
         };
