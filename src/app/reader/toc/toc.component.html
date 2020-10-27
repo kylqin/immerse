@@ -4,10 +4,10 @@
 <ul class="book-content">
     <li class="book-content-list" *ngFor="let item of list">
       <span class="content-dropdown" *ngIf="item.subitems.length > 0">
-        <mat-icon (click)="toggleSubtree(index)">navigate_next</mat-icon>
+        <mat-icon (click)="toggleSubtree(item.href)">navigate_next</mat-icon>
       </span>
       <a [href]="item.href" (click)="jump($event)" class="book-content-name">{{item.label}}</a>
-      <div *ngIf="item.subitems.length > 0 && currentIndex === index">
+      <div *ngIf="item.subitems.length > 0 && openedMenus[item.href]">
         <ng-template
           [ngTemplateOutlet]="listTemplateRef"
           [ngTemplateOutletContext]="{ $implicit: item.subitems }"

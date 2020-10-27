@@ -8,7 +8,7 @@ import { ReaderService } from '../reader.service';
 })
 export class TocComponent implements OnInit {
   public toc = null;
-  public currentIndex = -1;
+  public openedMenus = {};
 
   constructor(private readerService: ReaderService) { }
 
@@ -24,8 +24,8 @@ export class TocComponent implements OnInit {
     this.readerService.jump(href);
   }
 
-  toggleSubtree(index: number) {
-    this.currentIndex = index === this.currentIndex ? -1 : index;
+  toggleSubtree(href: string) {
+    this.openedMenus[href] = !this.openedMenus[href];
   }
 
 }
