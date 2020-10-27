@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, DialogPosition } from '@angular/material/dialog';
 import { SettingsComponent } from '../settings/settings.component';
 import { ConfigService } from 'src/app/config/config.service';
 import { ReaderService } from '../reader.service';
@@ -36,6 +36,12 @@ export class ButtonsComponent implements OnInit {
 
   async openSettings() {
     this.dialog.open(SettingsComponent, {
+      autoFocus: false,
+      position: {
+        top: '40px',
+        right: '20px',
+      },
+      backdropClass: 'reading-settings-dialog-backdrop', // disable default backgroup styles
       width: '300px',
       data: {
         theme: this.configService.getItem('reader.theme'),
