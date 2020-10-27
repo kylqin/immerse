@@ -8,7 +8,7 @@ import { ConfigService } from 'src/app/config/config.service';
   styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent implements OnInit {
-  public backgroundColor = '';
+  // public backgroundColor = '';
   public isSearch = false;
   public currentTab = 'contents';
 
@@ -16,15 +16,15 @@ export class NavigationComponent implements OnInit {
   public get author () { return this.readerService.currentBook ? this.readerService.currentBook.author : ''; }
 
   constructor(
-    private configService: ConfigService,
+    // private configService: ConfigService,
     public readerService: ReaderService
   ) { }
 
   ngOnInit(): void {
-    this.backgroundColor = this.configService.getItem('reader.theme') as string;
-    this.configService.listen('reader.theme').subscribe((theme: string) => {
-      this.backgroundColor = theme;
-    });
+    // this.backgroundColor = this.configService.getItem('reader.theme') as string;
+    // this.configService.listen('reader.theme').subscribe((theme: string) => {
+    //   this.backgroundColor = theme;
+    // });
   }
 
   changeTab(tab: string) {}

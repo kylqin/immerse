@@ -19,5 +19,4 @@ export class ButtonsComponent implements OnInit {
     const file = event.target.files[0]
     await this.libraryService.importBookFile(file);
   }
-
 }

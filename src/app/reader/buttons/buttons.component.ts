@@ -1,10 +1,11 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { MatDialog, DialogPosition } from '@angular/material/dialog';
-import { SettingsComponent } from '../settings/settings.component';
-import { ConfigService } from 'src/app/config/config.service';
-import { ReaderService } from '../reader.service';
-import * as screenfull from 'screenfull';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import * as screenfull from 'screenfull';
+import { ConfigService } from 'src/app/config/config.service';
+import { NavigationComponent } from '../navigation/navigation.component';
+import { ReaderService } from '../reader.service';
+import { SettingsComponent } from '../settings/settings.component';
 
 @Component({
   selector: 'app-reader-buttons',
@@ -12,7 +13,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./buttons.component.scss']
 })
 export class ButtonsComponent implements OnInit {
-  @Output() openNav = new EventEmitter<void>();
   public isFullscreen = false;
 
   constructor(
@@ -29,9 +29,20 @@ export class ButtonsComponent implements OnInit {
   ngOnInit(): void {}
 
   openNavigation() {
-    this.openNav.emit();
-    // 不知怎的，这个按钮没有自动 blur。
-    (document.activeElement as any).blur();
+    const dialog = this.dialog.open(NavigationComponent, {
+      autoFocus: false,
+      position: {
+        top: '40px',
+        left: '20px'
+      },
+      panelClass: ['reading-navigation-dialog-panel'],
+      backdropClass: 'reading-navigation-dialog-backdrop', // disable default backgroup styles
+      width: '340px',
+      height: 'calc(100vh - 60px)',
+      data: {}
+    });
+    dialog.afterOpened().subscribe(() => {
+    });
   }
 
   async openSettings() {
@@ -41,6 +52,7 @@ export class ButtonsComponent implements OnInit {
         top: '40px',
         right: '20px',
       },
+      panelClass: ['reading-settings-dialog-panel'],
       backdropClass: 'reading-settings-dialog-backdrop', // disable default backgroup styles
       width: '300px',
       data: {

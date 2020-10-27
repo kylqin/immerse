@@ -24,8 +24,12 @@
 .epub-container {
   overflow-x: hidden!important;
 }
-.mat-dialog-container {
+.reading-settings-dialog-panel .mat-dialog-container {
   overflow-x: hidden!important;
+}
+
+.reading-navigation-dialog-panel .mat-dialog-container {
+  padding: 0;
 }
 
 .book-cords-drop-zone-class,

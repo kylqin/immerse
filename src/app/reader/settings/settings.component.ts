@@ -1,7 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ConfigService } from 'src/app/config/config.service';
-import { ReaderConf } from 'src/app/models/ReaderConf';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 
 export interface SettingsDialogData {
